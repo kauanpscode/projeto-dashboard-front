@@ -1,0 +1,55 @@
+/* Estilos gerais */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+
+/* Estilo da Sidebar */
+.sidebar {
+  width: 200px; /* Largura fixa */
+  background-color: #1d35e4; /* Cor de fundo */
+  height: 100vh; /* Altura da viewport */
+  position: fixed; /* Fixa a barra na tela */
+  padding: 20px; /* Espaçamento interno */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra lateral */
+}
+
+
+/* Estilos do conteúdo principal */
+.main-content {
+  flex: 1;                  /* O conteúdo principal ocupa o restante do espaço disponível */
+  background-color: #ecf0f1;
+  padding: 20px;
+}
+
+/* Estilos internos da sidebar */
+.sidebar h2 {
+  text-align: center;
+  color:#ffffff
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 20px 0;
+}
+
+.sidebar ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.sidebar ul li svg {
+  margin-right: 5px;
+}
+
+.sidebar ul li a:hover {
+  filter: brightness(70%)
+}
