@@ -8,28 +8,36 @@ import Reports from "./pages/Reports/Reports.jsx";
 import Home from "./pages/Home/Home.jsx";
 import User from "./pages/Users/Users.jsx";
 import Login from "./pages/Login/Login.jsx";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute.jsx";
 
+import { AuthProvider } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify"; 
 import "react-toastify/dist/ReactToastify.css"; 
 
 function App() {
   return (
-    <Router>
-      <div className="app-container">
-        <Sidebar />
-        <div className="app-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/Arquivos" element={<Arquivos />} />
-            <Route path="/users" element={<User />} />
-            <Route path="/Reports" element={<Reports />} />
-            <Route path="/Login" element={<Login />} />
-          </Routes>
+    <AuthProvider>
+      <Router>
+        <div className="app-container">
+          <Sidebar />
+          <div className="app-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+
+              {/* Rotas protegidas */}
+              <Route element={<PrivateRoute />}>
+                <Route path="/Arquivos" element={<Arquivos />} />
+                <Route path="/users" element={<User />} />
+                <Route path="/Reports" element={<Reports />} />
+              </Route>
+            </Routes>
+          </div>
         </div>
-      </div>
-      <GlobalStyle />
-      <ToastContainer />
-    </Router>
+        <GlobalStyle />
+        <ToastContainer />
+      </Router>
+    </AuthProvider>
   );
 }
 

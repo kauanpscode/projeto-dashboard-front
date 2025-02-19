@@ -10,6 +10,7 @@ const Home = () => {
   const [users, setUsers] = useState([]);
   const [excelData, setExcelData] = useState([]);
   const [productivityData, setProductivityData] = useState({});
+  const [TMA, setTMA] = useState({});
   const [loading, setLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState([]);
 
@@ -50,7 +51,6 @@ const Home = () => {
         toast.error(`Erro ao carregar os dados para ${fileName}`);
       }
     };
-    console.log("Usuário", users)
 
     fetchData();
   }, []);
@@ -60,7 +60,10 @@ const Home = () => {
     if (excelData.length > 0) {
       const dadosProdutividade = contarUsuarios(excelData, currentDate);
       setProductivityData(dadosProdutividade);
-      console.log(productivityData)
+
+      const dadosTma = getTMA(excelData, currentDate);
+      setTMA(dadosTma);
+      console.log("TMA", TMA)
     }
   }, [excelData]);
 
@@ -85,7 +88,45 @@ const Home = () => {
     return contador;
   };
 
+  const getTMA = (arquivos, dataFiltro) => {
+    const tma = {};
 
+    for (const arquivo of arquivos) {
+      for (const item of arquivo.data) {
+        let dataTratamento = item["DATA DE TRATAMENTO"];
+
+        if (dataTratamento){
+          dataTratamento = dataTratamento.split(" ")[0]
+        }
+
+        if (dataFiltro.includes (dataTratamento)) {
+          const usuario = item["USUÁRIO QUE FEZ O TRATAMENTO"];
+          const inicioAtendimento = item["inicio_atendimento"];
+          const fimAtendimento = item["fim_atendimento"];
+
+          if (inicioAtendimento && fimAtendimento) {
+            const inicio = new Date(inicioAtendimento.replace(" ", "T"));
+            const fim = new Date(fimAtendimento.replace(" ", "T"));
+            const tmaOperador = (fim - inicio) / 10000 / 60;
+
+            if (!tma[usuario]) {
+              tma[usuario] = {totalTempo: 0, totalAtendimentos:0}
+            }
+
+            tma[usuario].totalTempo += tmaOperador;
+            tma[usuario].totalAtendimentos += 1;
+          }
+        }
+      }
+    }
+
+      // Calculando o TMA médio por operador
+  for (const usuario in tma) {
+    tma[usuario].mediaTMA = tma[usuario].totalTempo / tma[usuario].totalAtendimentos;
+  }
+
+    return tma;
+  };
 
   if (loading) {
     return <Loading />;
@@ -106,7 +147,7 @@ const Home = () => {
     const currentHour = now.getHours();
   
     const entrada = usuariosTurnoTabela[usuario]?.entrada || "00:00"; 
-    const [horas, minutos] = entrada.split(":").map(Number);
+    const [horas] = entrada.split(":").map(Number);
     let horasTrabalhadas = currentHour - horas;
   
     if (horasTrabalhadas > 6) horasTrabalhadas = 6; // Limitando a 6h, como mencionado
@@ -126,12 +167,13 @@ const Home = () => {
   
     acc[usuario] = {
       produtividade: productivityData[usuario] || 0,
+      tma: TMA[usuario]?.mediaTMA || 0,  // Exibindo o TMA médio
       turno: usuariosTurnoTabela[usuario]?.shift || "Desconhecido",
       channel: channel,
       meta: Math.floor(meta * horasTrabalhadas),
       porcentagem: ((productivityData[usuario] / (meta * horasTrabalhadas)) * 100).toFixed(0),
     };
-  
+    console.log("acc", acc)
     return acc;
   }, {});
   

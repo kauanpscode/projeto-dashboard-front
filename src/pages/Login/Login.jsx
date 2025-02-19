@@ -1,64 +1,54 @@
-// src/components/Login.js
-import React, { useState } from 'react';
+import { useState, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import "./style.css"
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const { login, register, isAuthenticated } = useContext(AuthContext);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Login bem-sucedido, armazenar o token
-        localStorage.setItem("authToken", data.token);
-        // Redirecionar o usuário para uma página protegida (por exemplo, dashboard)
-        window.location.href = "/dashboard";
-      } else {
-        setError(data.message || "Erro no login!");
-      }
-    } catch (error) {
-      console.error("Erro ao tentar fazer login:", error);
-      setError("Erro no servidor. Tente novamente mais tarde.");
+    setLoading(true);
+    if (isRegistering) {
+      await register(username, password);
+    } else {
+      await login(username, password);
     }
+    setLoading(false);
   };
 
+  if (isAuthenticated) {
+    return <p className="message">Você já está logado!</p>;
+  }
+
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input 
-            type="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            required 
-          />
-        </div>
-        <div>
-          <label>Senha:</label>
-          <input 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Entrar</button>
+    <div className="auth-container">
+      <h2 className="auth-title">{isRegistering ? "Cadastro" : "Login"}</h2>
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Usuário"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit" disabled={loading}>
+          {loading ? "Carregando..." : isRegistering ? "Cadastrar" : "Entrar"}
+        </button>
       </form>
+      <button className="toggle-btn" onClick={() => setIsRegistering(!isRegistering)}>
+        {isRegistering ? "Já tem uma conta? Faça login" : "Não tem uma conta? Cadastre-se"}
+      </button>
     </div>
   );
 };
