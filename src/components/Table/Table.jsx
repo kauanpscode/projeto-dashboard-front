@@ -8,20 +8,17 @@ import Paper from '@mui/material/Paper';
 import './style.css'
 
 export default function UserTable(dados) {
-  function decimalToTime(decimal) {
-    const minutes = Math.floor(decimal * 60); // Converte decimal para minutos
-    const seconds = Math.round((decimal * 60 - minutes) * 60); // Converte parte decimal para segundos
-    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    function decimalToTime(decimal) {
+      const hours = Math.floor(decimal);
+      const minutes = Math.round((decimal - hours) * 60);
+      return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
   }
-  
-  // Exemplo de uso:
-  console.log("aaa",decimalToTime(0.2520833333333334)); // Saída esperada: "02:37"
-  
 
   const getPercentageColor = (percent) => {
+    if (percent == "-") return '#a1b4d7'; // Verde se atingir ou ultrapassar a meta
     if (percent >= 100) return '#b9d7a1'; // Verde se atingir ou ultrapassar a meta
     if (percent >= 75) return '#fcdc50'; // Amarelo se estiver entre 75% e 99%
-    return '#f44336'; // Vermelho se for menor que 75%s
+    return '#f44336'; // Vermelho se for menor que 75%
   };
     return (
       <TableContainer component={Paper}>
