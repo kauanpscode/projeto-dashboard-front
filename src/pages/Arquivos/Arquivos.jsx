@@ -41,7 +41,7 @@ const Arquivos = () => {
   const handleDeleteConfirmed = async () => {
     try {
       await axios.delete(`/files/delete/${selectedFileId}`);
-      setFiles(files.filter((file) => file.id !== selectedFileId));
+      setFiles(files.filter((file) => file._id !== selectedFileId));
       toast.success("Arquivo excluído com sucesso!");
     } catch (error) {
       console.error("Erro ao excluir o arquivo:", error);
@@ -66,11 +66,11 @@ const Arquivos = () => {
           </thead>
           <tbody>
             {files.map((file) => (
-              <tr key={file.id}>
+              <tr key={file._id}>
                 <td>{file.originalName}</td>
                 <td>{file.channel_slug}</td>
                 <td>
-                  <button className="delete-btn" onClick={() => handleOpenModal(file.id)}>
+                  <button className="delete-btn" onClick={() => handleOpenModal(file._id)}>
                     Excluir
                   </button>
                 </td>

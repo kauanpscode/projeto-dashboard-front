@@ -69,7 +69,8 @@ const Users = () => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (_id) => {
+    console.log(_id)
     try {
       await axios.delete(`/users/${id}`);
       setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
@@ -169,7 +170,7 @@ const Users = () => {
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
-                <td>{user.id}</td>
+                <td>{user._id}</td>
                 <td>{user.name}</td>
                 <td>{user.channel}</td>
                 <td>{user.shift}</td>
