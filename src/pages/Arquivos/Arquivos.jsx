@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "../../services/axios";
 import { toast } from "react-toastify";
+import { FaThumbtack } from "react-icons/fa";
 
-import "./style.css";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import Loading from "../../components/Loading/Loading";
+import "./style.css";
 
 const Arquivos = () => {
   const [files, setFiles] = useState([]);
@@ -12,21 +13,22 @@ const Arquivos = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedFileId, setSelectedFileId] = useState(null);
 
-
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const response = await axios.get("files/list"); // Requisição à API
-        setFiles(response.data); // Atualiza o estado com os arquivos
+        const response = await axios.get("files/list");
+        setFiles(response.data);
+        setFiles(response.data.sort((b, a) => b.fixed - a.fixed));
+
       } catch (error) {
         console.error("Erro ao buscar arquivos:", error);
         toast.error("Erro ao carregar arquivos.");
       } finally {
-        setLoading(false); // Atualiza o estado de loading
+        setLoading(false);
       }
     };
 
-    fetchFiles(); // Chama a função de busca
+    fetchFiles();
   }, []);
 
   const handleOpenModal = (id) => {
@@ -34,21 +36,50 @@ const Arquivos = () => {
     setOpenModal(true);
   };
 
-  const handleCloseModal = () => {
-    setOpenModal(false);
+  const handleCloseModal = () => setOpenModal(false);
+
+  const handleToggleFix = async (id) => {
+    try {
+      const response = await axios.put(`/files/fix/${id}`);
+      setFiles((prevFiles) =>
+        prevFiles.map((file) =>
+          file._id === id ? { ...file, fixed: response.data.fixed } : file
+        )
+      );
+    } catch (error) {
+      toast.error("Erro ao atualizar fixação.");
+    }
   };
 
   const handleDeleteConfirmed = async () => {
     try {
       await axios.delete(`/files/delete/${selectedFileId}`);
-      setFiles(files.filter((file) => file._id !== selectedFileId));
-      toast.success("Arquivo excluído com sucesso!");
+      setFiles((prevFiles) => prevFiles.filter((file) => file._id !== selectedFileId));
     } catch (error) {
       console.error("Erro ao excluir o arquivo:", error);
       toast.error("Erro ao excluir o arquivo.");
     }
     setOpenModal(false);
   };
+
+  const handleDownload = async (filename) => {
+    try {
+      const response = await axios.get(`/files/download/${filename}`, {
+        responseType: "blob", // Garante que o arquivo seja tratado corretamente
+      });
+  
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      toast.error("Erro ao baixar o arquivo.");
+    }
+  };
+  
 
   return (
     <div className="files-container">
@@ -59,21 +90,37 @@ const Arquivos = () => {
         <table className="files-table">
           <thead>
             <tr>
+              <th>Fixar</th>
               <th>Arquivo</th>
               <th>Canal</th>
+              <th>Download</th>
               <th>Ação</th>
             </tr>
           </thead>
           <tbody>
-            {files.map((file) => (
-              <tr key={file._id}>
-                <td>{file.originalName}</td>
-                <td>{file.channel_slug}</td>
+            {files.map(({ _id, filename, originalName, channel_slug, fixed }) => (
+              <tr key={_id}>
                 <td>
-                  <button className="delete-btn" onClick={() => handleOpenModal(file._id)}>
-                    Excluir
-                  </button>
+                <button className="pin-btn" onClick={() => handleToggleFix(_id)}>
+                <FaThumbtack color={!fixed ? "#f4c542" : "#0056b3"} />
+                </button> 
                 </td>
+                <td>{originalName}</td>
+                <td>{channel_slug}</td>
+                <td>
+              <button className="download-btn" onClick={() => handleDownload(filename)}>
+                Baixar
+              </button>
+            </td>
+                <td>
+                  {!fixed && (
+                    <button className="delete-btn" onClick={() => handleOpenModal(_id)} >
+                      Excluir
+                    </button>
+                  )}
+                </td>
+
+
               </tr>
             ))}
           </tbody>

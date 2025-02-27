@@ -1,0 +1,38 @@
+.MuiDialog-paper {
+  border-radius: 8px;
+  padding: 20px;
+  width: 400px;
+  background-color: #f9f9f9; /* Cor de fundo mais suave */
+}
+
+.MuiDialogTitle-root {
+  font-size: 1.5rem;
+  color: #333; /* Cor de título mais escura */
+}
+
+.MuiDialogActions-root {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.MuiButton-root {
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 10px 20px;
+}
+
+.MuiButton-cancel {
+  background-color: #f44336; /* Vermelho para o Cancelar */
+  color: black;
+}
+
+.MuiButton-confirm {
+  background-color: #4caf50; /* Verde para Confirmar */
+  color: black;
+}
+
+.MuiButton-root:hover {
+  opacity: 0.8; /* Efeito de hover nos botões */
+}

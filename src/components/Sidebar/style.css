@@ -31,11 +31,11 @@ body {
 
 .sidebar ul {
   list-style: none;
-  padding: 0;
+  padding: 10px;
 }
 
 .sidebar ul li {
-  margin: 20px 0;
+  margin: 30px 0;
 }
 
 .sidebar ul li a {

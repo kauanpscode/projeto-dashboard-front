@@ -16,6 +16,7 @@
     "@mui/material": "^6.4.3",
     "axios": "^1.7.9",
     "chart.js": "^4.4.7",
+    "env": "^0.0.2",
     "html2canvas": "^1.4.1",
     "lucide-react": "^0.474.0",
     "projeto-dashboard": "file:",

@@ -46,9 +46,6 @@ const Login = () => {
           {loading ? "Carregando..." : isRegistering ? "Cadastrar" : "Entrar"}
         </button>
       </form>
-      <button className="toggle-btn" onClick={() => setIsRegistering(!isRegistering)}>
-        {isRegistering ? "Já tem uma conta? Faça login" : "Não tem uma conta? Cadastre-se"}
-      </button>
     </div>
   );
 };

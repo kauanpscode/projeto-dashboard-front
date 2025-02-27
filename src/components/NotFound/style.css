@@ -1,0 +1,36 @@
+.not-found-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f3f4f6;
+  }
+  
+  .not-found-title {
+    font-size: 6rem;
+    font-weight: bold;
+    color: #1f2937;
+  }
+  
+  .not-found-text {
+    font-size: 1.5rem;
+    color: #4b5563;
+    margin-top: 1rem;
+  }
+  
+  .not-found-link {
+    margin-top: 1.5rem;
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    color: white;
+    background-color: #2563eb;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .not-found-link:hover {
+    background-color: #1e40af;
+  }
+  

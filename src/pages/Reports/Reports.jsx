@@ -21,11 +21,12 @@ const Reports = () => {
     { label : "Mercado Livre Mediação", value: "mercadolivremed"},
     { label : "Novo Acompanhamento", value: "novoAcompanhamento"},
     { label : "Novo Acompanhamento Fulltime", value: "novoAcompanhamentoFulltime"},
+    { label : "Indisponíveis", value: "indisponivel"},
+    { label : "Acompanhamento Meli", value: "mercadolivreaco"},
     { label : "Demandas Extras", value: "demandasExtras"},
   ]
 
   const handleFileChange = (e) => {
-    console.log(e.target.files[0]);
     setSelectedFile(e.target.files[0])
   }
 
@@ -52,10 +53,6 @@ const Reports = () => {
     const formData = new FormData();
     formData.append("file", selectedFile)
     formData.append("channel_slug", channelSlug);
-
-    formData.forEach((value, key) => {
-      console.log(`${key}: ${value}`);
-    });
 
     try {
       const response = await axios.post("/files/upload", formData, {
@@ -94,7 +91,11 @@ const Reports = () => {
           ))}
         </select>
 
-        <input type="file" onChange={handleFileChange} />
+        <input
+          type="file"
+          accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          onChange={handleFileChange}
+        />
 
         <button type="submit">Enviar Arquivo</button>
       </form>

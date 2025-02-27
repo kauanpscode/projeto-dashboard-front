@@ -43,6 +43,7 @@
   background-color: #007bff;
   color: white;
   font-weight: 600;
+  text-align: center;
 }
 
 .files-table tr:nth-child(even) {
@@ -52,3 +53,32 @@
 .files-table tr:hover {
   background-color: #e8f4ff;
 }
+.pin-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: darkgray;
+  transition: color 0.3s ease-in-out;
+}
+
+.pin-btn:hover {
+  color: #f4c542;
+}
+
+.download-btn {
+  padding: 8px 14px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  background-color: #4CAF50;
+}
+
+.download-btn:hover {
+  background-color: #45a049;
+}
+
+  

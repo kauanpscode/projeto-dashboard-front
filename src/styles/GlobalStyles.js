@@ -9,7 +9,7 @@ export default createGlobalStyle`
   }
 
   body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
     background: #eee;
     color:black;
   }
