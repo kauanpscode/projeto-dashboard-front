@@ -8,22 +8,22 @@ const Reports = () => {
   const [channelSlug, setChannelSlug] = useState("")
   
   const channelSlugs = [
-    { label : "Magazine Luiza", value: "magazineluiza"},
-    { label : "Americanas", value: "b2w"},
-    { label : "Carrefour", value: "carrefour"},
-    { label : "Via Varejo", value: "cnova"},
-    { label : "OCP", value: "vtex_bancointer"},
-    { label : "Amazon", value: "amazon"},
-    { label : "MadeiraMadeira Mensageria", value: "madeiramadeiramsg"},
-    { label : "MadeiraMadeira SAC", value: "madeiramadeirasac"},
-    { label : "Mercado Livre Mensageria", value: "mercadolivremsg"},
-    { label : "Mercado Livre Reclamação", value: "mercadolivrerec"},
-    { label : "Mercado Livre Mediação", value: "mercadolivremed"},
-    { label : "Novo Acompanhamento", value: "novoAcompanhamento"},
-    { label : "Novo Acompanhamento Fulltime", value: "novoAcompanhamentoFulltime"},
-    { label : "Indisponíveis", value: "indisponivel"},
-    { label : "Acompanhamento Meli", value: "mercadolivreaco"},
-    { label : "Demandas Extras", value: "demandasExtras"},
+    { label : "Magazine Luiza", value: "MagazineLuiza"},
+    { label : "Americanas", value: "B2W"},
+    { label : "Carrefour", value: "Carrefour"},
+    { label : "Via Varejo", value: "Cnova"},
+    { label : "OCP", value: "OCP"},
+    { label : "Amazon", value: "Amazon"},
+    { label : "MadeiraMadeira Mensageria", value: "MadeiraMSG"},
+    { label : "MadeiraMadeira SAC", value: "Madeira SAC"},
+    { label : "Mercado Livre Mensageria", value: "MeliMensageria"},
+    { label : "Mercado Livre Reclamação", value: "MeliReclamacao"},
+    { label : "Mercado Livre Mediação", value: "MeliMediacao"},
+    { label : "Novo Acompanhamento", value: "NovoAcompanhamento"},
+    { label : "Novo Acompanhamento Fulltime", value: "NovoAcompanhamentoFulltime"},
+    { label : "Indisponíveis", value: "Indisponivel"},
+    { label : "Acompanhamento Meli", value: "MeliAcompanhamento"},
+    { label : "Demandas Extras", value: "DemandasExtras"},
   ]
 
   const handleFileChange = (e) => {
