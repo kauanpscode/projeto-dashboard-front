@@ -9,7 +9,8 @@ export default createGlobalStyle`
   }
 
   body {
-    font-family: 'Inter', sans-serif;
+    font-family: "Calibri", sans-serif;
+    font-size: 1;
     background: #eee;
     color:black;
   }

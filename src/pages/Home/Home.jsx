@@ -55,17 +55,38 @@ const Home = () => {
   return (
     <div className="container">
       <h1 className="home-title">Relatório de Operação</h1>
-      <Table {...usuariosOrdenados} />
       <div className="dashboard">
-        {Object.entries(atendimentosPorCanal).map(([canal, info]) => (
-          <div className="card-canal" key={canal}>
-            <h2>{canal}</h2>
-            <p><strong className="black-font">Atendimentos:</strong> {info.totalAtendimentos}</p>
-            <p><strong className="black-font">TMA:</strong> {decimalToTime(info.totalTempo / info.totalAtendimentos)}</p>
-          </div>
-        ))}
+        <div className="card">
+          <h2>Média de TMA</h2>
+          <p>{decimalToTime(mediaTMAgeral)} min</p>
+        </div>
+        <div className="card">
+          <h2>Total de Atendimentos</h2>
+          <p>{somaProdutividade}</p>
+        </div>
       </div>
-    </div>
+      <Table {...usuariosOrdenados} />      
+
+      <table className="table-canais">
+  <thead>
+    <tr className="thead">
+      {Object.keys(atendimentosPorCanal).map((canal) => (
+        <th key={canal}>{canal.slice(0,10)}</th>
+      ))}
+    </tr>
+  </thead>
+  <tbody>
+    <tr className="table-row">
+      {Object.values(atendimentosPorCanal).map((info, index) => (
+        <td key={`atendimentos-${index}`} className="TableCell">{info.totalAtendimentos}</td>
+      ))}
+    </tr>
+
+  </tbody>
+</table>
+
+
+      </div>
   );
 };
 
