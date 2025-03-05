@@ -11,6 +11,7 @@ const Home = () => {
   const [mediaTMAgeral, setMediaTMAgeral] = useState(0);
   const [somaProdutividade, setSomaProdutividade] = useState(0);
   const [atendimentosPorCanal, setAtendimentosPorCanal] = useState({});
+  const [metaGeral, setMetaGeral] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +33,7 @@ const Home = () => {
           setMediaTMAgeral(produtividadeData.mediaTMAGeral);
           setSomaProdutividade(produtividadeData.totalAtendimentosGeral);
           setAtendimentosPorCanal(produtividadeData.atendimentosPorCanal);
+          setMetaGeral(produtividadeData.metaTotalGeral);
         }
       } catch (error) {
         toast.error(`Erro ao carregar dados: ${error.message}`);
@@ -50,6 +52,8 @@ const Home = () => {
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
   };
 
+  const porcentagem = metaGeral > 0 ? ((somaProdutividade / metaGeral) * 100).toFixed(0) : "-";
+
   if (loading) return <Loading />;
 
   return (
@@ -57,14 +61,23 @@ const Home = () => {
       <h1 className="home-title">Relatório de Operação</h1>
       <div className="dashboard">
         <div className="card">
+          <h2>Total de Atendimentos</h2>
+          <p>{somaProdutividade}</p>
+        </div>
+        <div className="card">
           <h2>Média de TMA</h2>
           <p>{decimalToTime(mediaTMAgeral)} min</p>
         </div>
         <div className="card">
-          <h2>Total de Atendimentos</h2>
-          <p>{somaProdutividade}</p>
+          <h2>Meta Geral</h2>
+          <p>{metaGeral}</p>
+        </div>
+        <div className="card">
+          <h2>Meta (%)</h2>
+          <p>{porcentagem}%</p>
         </div>
       </div>
+
       <Table {...usuariosOrdenados} />      
 
       <table className="table-canais">

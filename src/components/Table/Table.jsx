@@ -44,7 +44,7 @@ export default function UserTable(dados) {
             <TableCell align="center">PRODUTIVIDADE (%)</TableCell>
             <TableCell align="center">TMA</TableCell>
             <TableCell align="center">META</TableCell>
-            <TableCell align="center">PORCENTAGEM</TableCell>
+            <TableCell align="center">META (%)</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
