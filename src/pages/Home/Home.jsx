@@ -82,7 +82,7 @@ const Home = () => {
 
       <table className="table-canais">
   <thead>
-    <tr className="thead">
+    <tr className="thead-color">
       {Object.keys(atendimentosPorCanal).map((canal) => (
         <th key={canal}>{canal.slice(0,10)}</th>
       ))}

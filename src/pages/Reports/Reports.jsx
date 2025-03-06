@@ -8,22 +8,23 @@ const Reports = () => {
   const [channelSlug, setChannelSlug] = useState("")
   
   const channelSlugs = [
-    { label : "Magazine Luiza", value: "MagazineLuiza"},
+    { label : "Magazine Luiza", value: "Magalu"},
     { label : "Americanas", value: "B2W"},
     { label : "Carrefour", value: "Carrefour"},
     { label : "Via Varejo", value: "Cnova"},
     { label : "OCP", value: "OCP"},
     { label : "Amazon", value: "Amazon"},
-    { label : "MadeiraMadeira Mensageria", value: "MadeiraMSG"},
-    { label : "MadeiraMadeira SAC", value: "Madeira SAC"},
-    { label : "Mercado Livre Mensageria", value: "MeliMensageria"},
-    { label : "Mercado Livre Reclamação", value: "MeliReclamacao"},
-    { label : "Mercado Livre Mediação", value: "MeliMediacao"},
-    { label : "Novo Acompanhamento", value: "NovoAcompanhamento"},
-    { label : "Novo Acompanhamento Fulltime", value: "NovoAcompanhamentoFulltime"},
-    { label : "Indisponíveis", value: "Indisponivel"},
-    { label : "Acompanhamento Meli", value: "MeliAcompanhamento"},
+    { label : "MadeiraMadeira Mensageria", value: "MM MSG"},
+    { label : "MadeiraMadeira SAC", value: "MM SAC"},
+    { label : "Mercado Livre Mensageria", value: "MeliMSG"},
+    { label : "Mercado Livre Reclamação", value: "MeliREC"},
+    { label : "Mercado Livre Mediação", value: "MeliMed"},
+    { label : "Novo Acompanhamento", value: "NovoAc."},
+    { label : "Novo Acompanhamento Fulltime", value: "Fulltime"},
+    { label : "Indisponíveis", value: "Indis."},
+    { label : "Acompanhamento Meli", value: "MeliAc."},
     { label : "Demandas Extras", value: "DemandasExtras"},
+    { label : "Retenção GMV", value: "Reten."},
   ]
 
   const handleFileChange = (e) => {

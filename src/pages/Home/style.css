@@ -66,3 +66,6 @@ body {
 .card-canal {
   display: none; /* Removendo os cards de canal */
 }
+.thead-color {
+  color: #222;
+}
