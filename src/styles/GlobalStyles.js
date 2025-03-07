@@ -11,7 +11,7 @@ export default createGlobalStyle`
   body {
     font-family: "Calibri", sans-serif;
     font-size: 1;
-    background: #eee;
+    background: #fff;
     color:black;
   }
 
@@ -51,7 +51,7 @@ export default createGlobalStyle`
   flex: 1; /* O conteúdo ocupará o espaço restante */
   margin-left: 200px; /* Espaço igual à largura da Sidebar */
   padding: 20px; /* Espaçamento interno */
-  background-color: #fff; /* Cor de fundo para destacar o conteúdo */
+  background-color: #f5f5f5; /* Cor de fundo para destacar o conteúdo */
 }
 
 `;

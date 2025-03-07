@@ -25,6 +25,7 @@ const Reports = () => {
     { label : "Acompanhamento Meli", value: "MeliAc."},
     { label : "Demandas Extras", value: "DemandasExtras"},
     { label : "Retenção GMV", value: "Reten."},
+    { label : "Seller", value: "Seller"},
   ]
 
   const handleFileChange = (e) => {
