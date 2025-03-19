@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import axios from "../../services/axios";
-import { toast } from "react-toastify";
-import { FaThumbtack } from "react-icons/fa";
+import { useState, useEffect } from 'react';
+import axios from '../../services/axios';
+import { toast } from 'react-toastify';
+import { FaThumbtack } from 'react-icons/fa';
 
-import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
-import Loading from "../../components/Loading/Loading";
-import "./style.css";
+import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
+import Loading from '../../components/Loading/Loading';
+import './style.css';
 
 const Arquivos = () => {
   const [files, setFiles] = useState([]);
@@ -16,13 +16,11 @@ const Arquivos = () => {
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const response = await axios.get("files/list");
+        const response = await axios.get('files/list');
         setFiles(response.data);
         setFiles(response.data.sort((b, a) => b.fixed - a.fixed));
-
       } catch (error) {
-        console.error("Erro ao buscar arquivos:", error);
-        toast.error("Erro ao carregar arquivos.");
+        toast.error('Erro ao carregar arquivos.');
       } finally {
         setLoading(false);
       }
@@ -31,55 +29,79 @@ const Arquivos = () => {
     fetchFiles();
   }, []);
 
-  const handleOpenModal = (id) => {
+  useEffect(() => {
+    if (files.length === 0) return;
+
+    const nameCount = {};
+    const duplicates = [];
+
+    files.forEach(file => {
+      nameCount[file.originalName] = (nameCount[file.originalName] || 0) + 1;
+      if (
+        nameCount[file.originalName] > 1 &&
+        !duplicates.includes(file.originalName)
+      ) {
+        duplicates.push(file.originalName);
+      }
+    });
+
+    if (duplicates.length > 0) {
+      toast.error('Algum arquivo está duplicado.');
+    }
+  }, [files]); // Agora o efeito é acionado quando files muda
+
+  const handleOpenModal = id => {
     setSelectedFileId(id);
     setOpenModal(true);
   };
 
   const handleCloseModal = () => setOpenModal(false);
 
-  const handleToggleFix = async (id) => {
+  const handleToggleFix = async id => {
     try {
       const response = await axios.put(`/files/fix/${id}`);
-      setFiles((prevFiles) =>
-        prevFiles.map((file) =>
+      setFiles(prevFiles =>
+        prevFiles.map(file =>
           file._id === id ? { ...file, fixed: response.data.fixed } : file
         )
       );
     } catch (error) {
-      toast.error("Erro ao atualizar fixação.");
+      toast.error('Erro ao atualizar fixação.');
     }
   };
 
   const handleDeleteConfirmed = async () => {
     try {
       await axios.delete(`/files/delete/${selectedFileId}`);
-      setFiles((prevFiles) => prevFiles.filter((file) => file._id !== selectedFileId));
+      setFiles(prevFiles =>
+        prevFiles.filter(file => file._id !== selectedFileId)
+      );
     } catch (error) {
-      console.error("Erro ao excluir o arquivo:", error);
-      toast.error("Erro ao excluir o arquivo.");
+      console.error('Erro ao excluir o arquivo:', error);
+      toast.error('Erro ao excluir o arquivo.');
     }
     setOpenModal(false);
   };
 
-  const handleDownload = async (filename) => {
+  const handleDownload = async (filename, originalName, channelSlug) => {
     try {
       const response = await axios.get(`/files/download/${filename}`, {
-        responseType: "blob", // Garante que o arquivo seja tratado corretamente
+        responseType: 'blob',
       });
-  
+
       const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
+      const link = document.createElement('a');
+      const downloadName = `${originalName}_${channelSlug}.xlsx`; // Nome final do arquivo baixado
+
       link.href = url;
-      link.setAttribute("download", filename);
+      link.setAttribute('download', downloadName);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      toast.error("Erro ao baixar o arquivo.");
+      toast.error('Erro ao baixar o arquivo.');
     }
   };
-  
 
   return (
     <div className="files-container">
@@ -98,31 +120,43 @@ const Arquivos = () => {
             </tr>
           </thead>
           <tbody>
-            {files.map(({ _id, filename, originalName, channel_slug, fixed }) => (
-              <tr key={_id}>
-                <td>
-                <button className="pin-btn" onClick={() => handleToggleFix(_id)}>
-                <FaThumbtack color={!fixed ? "#f4c542" : "#0056b3"} />
-                </button> 
-                </td>
-                <td>{originalName}</td>
-                <td>{channel_slug}</td>
-                <td>
-              <button className="download-btn" onClick={() => handleDownload(filename)}>
-                Baixar
-              </button>
-            </td>
-                <td>
-                  {!fixed && (
-                    <button className="delete-btn" onClick={() => handleOpenModal(_id)} >
-                      Excluir
+            {files.map(
+              ({ _id, filename, originalName, channel_slug, fixed }) => (
+                <tr key={_id}>
+                  <td>
+                    <button
+                      className="pin-btn"
+                      onClick={() => handleToggleFix(_id)}
+                    >
+                      <FaThumbtack color={!fixed ? '#f4c542' : '#0056b3'} />
                     </button>
-                  )}
-                </td>
+                  </td>
+                  <td>{originalName}</td>
+                  <td>{channel_slug}</td>
+                  <td>
+                    <button
+                      className="download-btn"
+                      onClick={() =>
+                        handleDownload(filename, originalName, channel_slug)
+                      }
+                    >
+                      Baixar
+                    </button>
+                  </td>
 
-
-              </tr>
-            ))}
+                  <td>
+                    {!fixed && (
+                      <button
+                        className="delete-btn"
+                        onClick={() => handleOpenModal(_id)}
+                      >
+                        Excluir
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              )
+            )}
           </tbody>
         </table>
       ) : (

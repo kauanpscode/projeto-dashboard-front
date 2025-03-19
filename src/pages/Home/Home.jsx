@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import axios from "../../services/axios";
-import { toast } from "react-toastify";
-import "./style.css";
-import Loading from "../../components/Loading/Loading";
-import Table from "../../components/Table/Table";
+import { useState, useEffect } from 'react';
+import axios from '../../services/axios';
+import { toast } from 'react-toastify';
+import './style.css';
+import Loading from '../../components/Loading/Loading';
+import Table from '../../components/Table/Table';
 
 const Home = () => {
   const [usuariosOrdenados, setUsuariosOrdenados] = useState({});
@@ -12,28 +12,35 @@ const Home = () => {
   const [somaProdutividade, setSomaProdutividade] = useState(0);
   const [atendimentosPorCanal, setAtendimentosPorCanal] = useState({});
   const [metaGeral, setMetaGeral] = useState(0);
+  const [vaziosPorCanal, setVaziosPorCanal] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        
-        const { data: usersData } = await axios.get("/users");
-        const { data: dataFiles } = await axios.get("files/list");
+
+        const { data: usersData } = await axios.get('/users');
+        const { data: dataFiles } = await axios.get('files/list');
 
         if (dataFiles.length > 0) {
-          const { data: excelData } = await axios.get(`files/excel-data?file=${dataFiles[0].filename}`);
-          
-          const { data: produtividadeData } = await axios.post("/api/produtividade", {
-            excelData,
-            users: usersData,
-          });
-          
+          const { data: excelData } = await axios.get(
+            `files/excel-data?file=${dataFiles[0].filename}`
+          );
+
+          const { data: produtividadeData } = await axios.post(
+            '/api/produtividade',
+            {
+              excelData,
+              users: usersData,
+            }
+          );
+
           setUsuariosOrdenados(produtividadeData.usuariosOrdenadosPorTurno);
           setMediaTMAgeral(produtividadeData.mediaTMAGeral);
           setSomaProdutividade(produtividadeData.totalAtendimentosGeral);
           setAtendimentosPorCanal(produtividadeData.atendimentosPorCanal);
           setMetaGeral(produtividadeData.metaTotalGeral);
+          setVaziosPorCanal(produtividadeData.dataTratamentoVaziasPorCanal);
         }
       } catch (error) {
         toast.error(`Erro ao carregar dados: ${error.message}`);
@@ -41,18 +48,19 @@ const Home = () => {
         setLoading(false);
       }
     };
-    
+
     fetchData();
   }, []);
 
-  const decimalToTime = (decimal) => {
-    if (!decimal) return "00:00";
+  const decimalToTime = decimal => {
+    if (!decimal) return '00:00';
     const hours = Math.floor(decimal);
     const minutes = Math.round((decimal - hours) * 60);
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
   };
 
-  const porcentagem = metaGeral > 0 ? ((somaProdutividade / metaGeral) * 100).toFixed(0) : "-";
+  const porcentagem =
+    metaGeral > 0 ? ((somaProdutividade / metaGeral) * 100).toFixed(0) : '-';
 
   if (loading) return <Loading />;
 
@@ -78,28 +86,52 @@ const Home = () => {
         </div>
       </div>
 
-      <Table {...usuariosOrdenados} />      
+      <Table {...usuariosOrdenados} />
+
+      <h2 className="table-title">Produtividade por canal do dia</h2>
 
       <table className="table-canais">
-  <thead>
-    <tr className="thead-color">
-      {Object.keys(atendimentosPorCanal).map((canal) => (
-        <th key={canal}>{canal.slice(0,10)}</th>
-      ))}
-    </tr>
-  </thead>
-  <tbody>
-    <tr className="table-row">
-      {Object.values(atendimentosPorCanal).map((info, index) => (
-        <td key={`atendimentos-${index}`} className="TableCell">{info.totalAtendimentos}</td>
-      ))}
-    </tr>
+        <thead>
+          <tr className="thead-color">
+            {Object.keys(atendimentosPorCanal).map(canal => (
+              <th key={canal}>{canal.slice(0, 10)}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="table-row">
+            {Object.values(atendimentosPorCanal).map((info, index) => (
+              <td key={`atendimentos-${index}`} className="TableCell">
+                {info.totalAtendimentos}
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
 
-  </tbody>
-</table>
+      <h2 className="table-title">
+        Pedidos pendentes para atuação baseado na última extração{' '}
+      </h2>
 
-
-      </div>
+      <table className="table-canais">
+        <thead>
+          <tr className="thead-color">
+            {Object.keys(vaziosPorCanal).map(canal => (
+              <th key={canal}>{canal.slice(0, 10)}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="table-row">
+            {Object.values(vaziosPorCanal).map((info, index) => (
+              <td key={`vazios-${index}`} className="TableCell">
+                {info}
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+    </div>
   );
 };
 

@@ -74,11 +74,9 @@
   cursor: pointer;
   font-size: 0.85rem;
   transition: all 0.3s ease;
-  background-color: #4CAF50;
+  background-color: #4caf50;
 }
 
 .download-btn:hover {
   background-color: #45a049;
 }
-
-  

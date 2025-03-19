@@ -4,7 +4,6 @@ body {
   font-family: Arial, sans-serif;
 }
 
-
 /* Estilo da Sidebar */
 .sidebar {
   width: 200px; /* Largura fixa */
@@ -15,10 +14,9 @@ body {
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra lateral */
 }
 
-
 /* Estilos do conteúdo principal */
 .main-content {
-  flex: 1;                  /* O conteúdo principal ocupa o restante do espaço disponível */
+  flex: 1; /* O conteúdo principal ocupa o restante do espaço disponível */
   background-color: #ecf0f1;
   padding: 20px;
 }
@@ -26,7 +24,7 @@ body {
 /* Estilos internos da sidebar */
 .sidebar h2 {
   text-align: center;
-  color:#ffffff
+  color: #ffffff;
 }
 
 .sidebar ul {
@@ -51,5 +49,5 @@ body {
 }
 
 .sidebar ul li a:hover {
-  filter: brightness(70%)
+  filter: brightness(70%);
 }

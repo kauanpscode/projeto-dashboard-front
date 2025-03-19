@@ -1,36 +1,41 @@
-.table-container, .table-canais {
-    overflow: hidden;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 100%;
-    border-collapse: collapse;
-    font-family: 'Calibri', sans-serif;
-  }
-  
-  /* Estilo do cabeçalho */
-  .thead, .table-canais thead {
-    background-color: #9cd1ff;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-  }
+.table-container,
+.table-canais {
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  border-collapse: collapse;
+  font-family: 'Calibri', sans-serif;
+}
 
-  .table-canais {
-    margin-top: 20px;
-    min-width: 100%;
-  }
-  
-  /* Alternância de cores nas linhas */
-  .table-row:nth-child(even), .table-canais tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .table-row:hover, .table-canais tbody tr:hover {
-    background-color: #e3f2fd;
-  }
-  
-  /* Estilo das células */
-  .TableCell, .table-canais th, .table-canais td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    text-align: center;
-  }
+/* Estilo do cabeçalho */
+.thead,
+.table-canais thead {
+  background-color: #9cd1ff;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.table-canais {
+  min-width: 100%;
+}
+
+/* Alternância de cores nas linhas */
+.table-row:nth-child(even),
+.table-canais tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table-row:hover,
+.table-canais tbody tr:hover {
+  background-color: #e3f2fd;
+}
+
+/* Estilo das células */
+.TableCell,
+.table-canais th,
+.table-canais td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}

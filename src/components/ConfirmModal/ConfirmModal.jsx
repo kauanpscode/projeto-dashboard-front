@@ -1,11 +1,17 @@
-import { Dialog, DialogTitle, DialogActions, Button } from "@mui/material";
-import "./style.css";
+import { Dialog, DialogTitle, DialogActions, Button } from '@mui/material';
+import './style.css';
 
 // eslint-disable-next-line react/prop-types
 const ConfirmModal = ({ open, onClose, onConfirm, title }) => {
   return (
-    <Dialog open={open} onClose={onClose} PaperProps={{ className: "dialog-paper" }}>
-      <DialogTitle className="dialog-title">{title || "Tem certeza que deseja continuar?"}</DialogTitle>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      PaperProps={{ className: 'dialog-paper' }}
+    >
+      <DialogTitle className="dialog-title">
+        {title || 'Tem certeza que deseja continuar?'}
+      </DialogTitle>
       <DialogActions className="dialog-actions">
         <Button
           onClick={onClose}

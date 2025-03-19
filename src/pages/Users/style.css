@@ -32,7 +32,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.users-table th, 
+.users-table th,
 .users-table td {
   padding: 14px 16px;
   border: 1px solid #ddd;
@@ -54,7 +54,7 @@
   background-color: #e8f4ff;
 }
 
-.edit-btn, 
+.edit-btn,
 .delete-btn {
   padding: 8px 14px;
   margin: 0 5px;
@@ -132,7 +132,7 @@
   filter: 70%;
 }
 
-input[type="number"] {
+input[type='number'] {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
@@ -141,7 +141,7 @@ input[type="number"] {
   font-size: 1rem;
 }
 
-input[type="number"]:focus {
+input[type='number']:focus {
   outline: none;
   border-color: #007bff;
   box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);

@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import { FaHome, FaChartBar, FaUsers} from "react-icons/fa";
-import { GoFileSubmodule } from "react-icons/go";
-import './style.css'
+import { Link } from 'react-router-dom';
+import { FaHome, FaChartBar, FaUsers } from 'react-icons/fa';
+import { GoFileSubmodule } from 'react-icons/go';
+import './style.css';
 
 const Sidebar = () => {
   return (
@@ -9,16 +9,24 @@ const Sidebar = () => {
       <h2>Relatórios</h2>
       <ul>
         <li>
-          <Link to="/" ><FaHome/> Home</Link>
+          <Link to="/">
+            <FaHome /> Home
+          </Link>
         </li>
         <li>
-          <Link to="/arquivos" ><GoFileSubmodule/> Arquivos</Link>
+          <Link to="/arquivos">
+            <GoFileSubmodule /> Arquivos
+          </Link>
         </li>
         <li>
-          <Link to="/users" ><FaUsers /> Usuários</Link>
+          <Link to="/users">
+            <FaUsers /> Usuários
+          </Link>
         </li>
         <li>
-          <Link to="/reports" ><FaChartBar /> Reports</Link>
+          <Link to="/reports">
+            <FaChartBar /> Reports
+          </Link>
         </li>
       </ul>
     </div>

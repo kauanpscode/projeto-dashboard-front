@@ -69,3 +69,10 @@ body {
 .thead-color {
   color: #222;
 }
+
+.table-title {
+  margin: 15px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #333;
+}
